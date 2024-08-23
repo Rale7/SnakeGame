@@ -10,9 +10,12 @@ def on_leave(dugme, boja, *e):
 
 def zvuk():
     mixer.init()
-    dugmeZvuk = mixer.Sound("Car_Door_Close-SoundBible.com-1695076524.mp3")
-    dugmeZvuk.set_volume(0.1)
-    dugmeZvuk.play()
+    try:
+        dugmeZvuk = mixer.Sound("Car_Door_Close-SoundBible.com-1695076524.mp3")
+        dugmeZvuk.set_volume(0.1)
+        dugmeZvuk.play()
+    except FileNotFoundError:
+        pass
 
 class Dugme:
 

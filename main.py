@@ -1,6 +1,9 @@
 import tkinter as tk
 import time
 import random
+
+import pygame
+
 import ulaz
 from zmija import Zmija, pravljanjeKvadrata
 import os
@@ -16,9 +19,12 @@ def trcanje(zmija):
     prozor.bind("<Escape>", pauza, add="+")
     hrana = pravljanjeKvadrata(random.choice(xLista[1:-1]), random.choice(yLista[:-1]), platno)
     mixer.init()
-    mixer.music.load("535331_Stay-Inside-Me.mp3")
-    mixer.music.set_volume(0.01)
-    mixer.music.play(-1)
+    try:
+        mixer.music.load("535331_Stay-Inside-Me.mp3")
+        mixer.music.set_volume(0.01)
+        mixer.music.play(-1)
+    except pygame.error:
+        pass
 
     while True:
         bul = zmija.pomeranje(hrana)
@@ -78,8 +84,6 @@ def pauza(*args):
 
     skupObjekata.update({dugmeMeni, dugmeNastavi, dugmePonovi, dugmeIzadji, labelPauza, labelScore})
 
-ulaz.ulazni_prozor()
-
 skupObjekata = set()
 xLista = [i for i in range(0, 1921, 30)]
 yLista = [i for i in range(0, 1081, 30)]
@@ -91,6 +95,7 @@ platno.pack()
 zmija = Zmija(platno, xLista, yLista)
 
 prozor.attributes("-fullscreen", True)
+prozor.after(1, lambda: prozor.focus_force())
 
 trcanje(zmija)
 
